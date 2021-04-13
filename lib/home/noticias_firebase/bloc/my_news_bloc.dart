@@ -40,11 +40,11 @@ class MyNewsBloc extends Bloc<MyNewsEvent, MyNewsState> {
       String imageUrl = await _uploadFile();
       if (imageUrl != null) {
         yield LoadingState();
-        await _saveNoticias(
-            event.noticia.copyWith(urlToImage: imageUrl, url: imageUrl));
+        await _saveNoticias(event.noticia.copyWith(urlToImage: imageUrl));
+        // yield LoadedNewsState(noticiasList: await _getNoticias() ?? []);
         yield SavedNewState();
       } else {
-        yield ErrorMessageState(errorMsg: "Error no se pudo guardar la imagen");
+        yield ErrorMessageState(errorMsg: "No se pudo guardar la imagen");
       }
     }
   }
@@ -61,7 +61,7 @@ class MyNewsBloc extends Bloc<MyNewsEvent, MyNewsState> {
               description: element['description'],
               url: element['url'],
               urlToImage: element['urlToImage'],
-              publishedAt: element['publishedAt'].toDate(),
+              publishedAt: DateTime.parse(element["publishedAt"]),
               // content: element['content'],
             ),
           )
@@ -91,18 +91,23 @@ class MyNewsBloc extends Bloc<MyNewsEvent, MyNewsState> {
     try {
       var stamp = DateTime.now();
       if (_selectedImage == null) return null;
-
+      // define upload task
       UploadTask task = FirebaseStorage.instance
-          .ref("noticias/imagen_$stamp")
+          .ref("noticias/imagen_$stamp.png")
           .putFile(_selectedImage);
+      // execute task
       await task;
-      return await task.storage.ref("noticias/imagen_$stamp").getDownloadURL();
+      // recuperar url del documento subido
+      return await task.storage
+          .ref("noticias/imagen_$stamp.png")
+          .getDownloadURL();
     } on FirebaseException catch (e) {
       // e.g, e.code == 'canceled'
       print("Error al subir la imagen: $e");
       return null;
     } catch (e) {
-      print(e);
+      // error
+      print("Error al subir la imagen: $e");
       return null;
     }
   }

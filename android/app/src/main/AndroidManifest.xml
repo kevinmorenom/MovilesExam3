@@ -7,7 +7,6 @@
 			while the Flutter UI initializes. After that, this theme continues
 			to determine the Window background behind the Flutter UI.
 			-->
-			<uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 			<meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme" />
 			<!--
 			Displays an Android View that continues showing the launch screen
