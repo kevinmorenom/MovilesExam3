@@ -63,6 +63,7 @@ class MyNewsBloc extends Bloc<MyNewsEvent, MyNewsState> {
               urlToImage: element['urlToImage'],
               publishedAt: DateTime.parse(element["publishedAt"]),
               // content: element['content'],
+              // //
             ),
           )
           .toList();
