@@ -4,6 +4,7 @@ import 'package:google_login/bloc/auth_bloc.dart';
 import 'package:google_login/home/noticias_ext_api/bloc/search_bloc.dart';
 import 'package:google_login/home/noticias_firebase/bloc/my_news_bloc.dart';
 import 'package:google_login/home/noticias_firebase/mis_noticias.dart';
+import 'package:google_login/home/noticias_subir/bloc/upload_bloc.dart';
 import 'noticias_ext_api/noticias_deportes.dart';
 import 'package:google_login/home/noticias_subir/pantalla_tres.dart';
 
@@ -35,6 +36,9 @@ class _HomePageState extends State<HomePage> {
         ),
         BlocProvider(
           create: (context) => MyNewsBloc()..add(RequestAllNewsEvent()),
+        ),
+        BlocProvider(
+          create: (context) => UploadBloc()..add(InitialEvent()),
         )
       ],
       child: Scaffold(

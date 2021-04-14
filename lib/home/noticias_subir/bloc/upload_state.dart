@@ -32,3 +32,6 @@ class ErrorMessageState extends UploadState {
   @override
   List<Object> get props => [errorMsg];
 }
+
+//indicador de que se guardo bien
+class SavedApiNewsState extends UploadState {}

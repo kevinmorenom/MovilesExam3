@@ -7,6 +7,8 @@ abstract class UploadEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class InitialEvent extends UploadEvent {}
+
 //boton dee imagen
 class PickImageEvent extends UploadEvent {}
 
@@ -15,6 +17,15 @@ class SaveNewElementEvent extends UploadEvent {
   final New noticia;
 
   SaveNewElementEvent({@required this.noticia});
+
+  @override
+  List<Object> get props => [noticia];
+}
+
+class SaveApiNewsEvent extends UploadEvent {
+  final New noticia;
+
+  SaveApiNewsEvent({@required this.noticia});
 
   @override
   List<Object> get props => [noticia];
