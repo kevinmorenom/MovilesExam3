@@ -19,13 +19,33 @@ class NewsRepository {
     // https://newsapi.org/v2/top-headlines?country=mx&q=futbol&category=sports&apiKey&apiKey=laAPIkey
     // crear modelos antes
 
-    final _uri = Uri(
-      scheme: 'https',
-      host: 'newsapi.org',
-      path: 'v2/top-headlines',
-      queryParameters: {"country": "mx", "apiKey": apiKey},
-    );
+    // final _uri = Uri(
+    //   scheme: 'https',
+    //   host: 'newsapi.org',
+    //   path: 'v2/top-headlines',
+    //   queryParameters: {"country": "mx", "apiKey": apiKey},
+    // );
     // TODO: completar request y deserializacion
+    var _uri;
+    if (query == '') {
+      _uri = Uri(
+        scheme: 'https',
+        host: 'newsapi.org',
+        path: 'v2/top-headlines',
+        queryParameters: {"country": "mx", "apiKey": apiKey},
+      );
+    }
+
+    //request a everything en caso de que el query no sea vacio
+    else {
+      _uri = Uri(
+        scheme: 'https',
+        host: 'newsapi.org',
+        path: 'v2/everything',
+        queryParameters: {"q": "$query", "apiKey": apiKey},
+      );
+    }
+
     try {
       final response = await get(_uri);
       if (response.statusCode == HttpStatus.ok) {

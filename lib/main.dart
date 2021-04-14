@@ -10,7 +10,6 @@ void main() async {
   // inicializar firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   runApp(
     BlocProvider(
       create: (context) => AuthBloc()..add(VerifyAuthenticationEvent()),
