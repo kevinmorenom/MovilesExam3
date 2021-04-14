@@ -10,15 +10,4 @@ abstract class MyNewsEvent extends Equatable {
 //Sera activado al iniciar
 class RequestAllNewsEvent extends MyNewsEvent {}
 
-//boton dee imagen
-class PickImageEvent extends MyNewsEvent {}
-
-//boton de guardar
-class SaveNewElementEvent extends MyNewsEvent {
-  final New noticia;
-
-  SaveNewElementEvent({@required this.noticia});
-
-  @override
-  List<Object> get props => [noticia];
-}
+class EmptyNewsEvent extends MyNewsEvent {}

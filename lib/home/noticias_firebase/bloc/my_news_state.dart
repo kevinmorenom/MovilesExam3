@@ -15,6 +15,8 @@ class LoadingState extends MyNewsState {}
 //indicador de que se guardo bien
 class SavedNewState extends MyNewsState {}
 
+class EmptyNewsState extends MyNewsState {}
+
 //mostrar errores
 class ErrorMessageState extends MyNewsState {
   final String errorMsg;
