@@ -12,14 +12,22 @@ class ItemNoticia extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(6.0),
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           child: Row(
             children: [
               Expanded(
                 flex: 1,
-                child: Image.network(
-                  "${noticia.urlToImage}",
-                  height: 100,
-                  fit: BoxFit.cover,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      bottomLeft: Radius.circular(8)),
+                  child: Image.network(
+                    "${noticia.urlToImage}",
+                    height: 130,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Expanded(
