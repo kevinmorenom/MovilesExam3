@@ -41,7 +41,6 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
       }
     }
     if (event is SaveApiNewsEvent) {
-      print('subiendo');
       yield LoadingState();
       await _saveNoticias(event.noticia);
       yield SavedApiNewsState();

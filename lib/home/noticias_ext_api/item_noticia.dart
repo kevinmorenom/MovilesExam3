@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_login/home/noticias_subir/bloc/upload_bloc.dart';
 import 'package:google_login/models/new.dart';
+import 'package:http/http.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 
 class ItemNoticia extends StatelessWidget {
   final New noticia;
@@ -84,33 +89,44 @@ class ItemNoticia extends StatelessWidget {
                             fontSize: 12,
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: IconButton(
-                            onPressed: () {
-                              print('pressed');
-                              BlocProvider.of<UploadBloc>(context).add(
-                                SaveApiNewsEvent(
-                                  noticia: New(
-                                      source: null,
-                                      author: noticia.author ??
-                                          "Autor no disponible",
-                                      title: noticia.title,
-                                      description: noticia.description ??
-                                          "Descripcion no disponible",
-                                      url: noticia.urlToImage,
-                                      urlToImage: noticia.urlToImage,
-                                      publishedAt: noticia.publishedAt),
-                                  // content: element['content'],
-                                  // //
-                                ),
-                              );
-                            },
-                            icon: Icon(Icons.add),
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                          ),
-                        )
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                _shareNew(noticia);
+                              },
+                              icon: Icon(Icons.share),
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                            ),
+                            SizedBox(width: 25),
+                            IconButton(
+                              onPressed: () {
+                                print('pressed');
+                                BlocProvider.of<UploadBloc>(context).add(
+                                  SaveApiNewsEvent(
+                                    noticia: New(
+                                        source: null,
+                                        author: noticia.author ??
+                                            "Autor no disponible",
+                                        title: noticia.title,
+                                        description: noticia.description ??
+                                            "Descripcion no disponible",
+                                        url: noticia.urlToImage,
+                                        urlToImage: noticia.urlToImage,
+                                        publishedAt: noticia.publishedAt),
+                                    // content: element['content'],
+                                    // //
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.add),
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -121,5 +137,16 @@ class ItemNoticia extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<Null> _shareNew(New noticia) async {
+    var response = await get(Uri.parse(noticia.urlToImage));
+    final documentDirectory = (await getExternalStorageDirectory()).path;
+    File imgFile = new File('$documentDirectory/flutter.png');
+    imgFile.writeAsBytesSync(response.bodyBytes);
+
+    Share.shareFiles(['$documentDirectory/flutter.png'],
+        subject: "${noticia.title}",
+        text: '${noticia.description}\n\n ${noticia.url}');
   }
 }
