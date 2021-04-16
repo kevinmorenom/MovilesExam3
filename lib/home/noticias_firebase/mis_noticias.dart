@@ -47,43 +47,47 @@ class _MisNoticiasState extends State<MisNoticias> {
                 stream: misNoticias,
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  return RefreshIndicator(
-                    child: ListView(
-                      children:
-                          snapshot.data.docs.map((DocumentSnapshot document) {
-                        return new ItemNoticiaFirebase(
-                          noticia: New(
-                            source: null,
-                            author: document['author'],
-                            title: document['title'],
-                            description: document['description'],
-                            url: document['url'],
-                            urlToImage: document['urlToImage'],
-                            publishedAt:
-                                DateTime.parse(document["publishedAt"]),
-                            // content: element['content'],
-                            // //
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    // child: ListView.builder(
-                    //   itemCount: state.noticiasList.length,
-                    //   itemBuilder: (BuildContext context, int index) {
-                    //     return ItemNoticia(noticia: state.noticiasList[index]);
-                    //   },
-                    // ),
-                    onRefresh: () async {
-                      print('Refresh Indicator');
-                      ScaffoldMessenger.of(context)
-                        ..hideCurrentSnackBar()
-                        ..showSnackBar(
-                          SnackBar(
-                            content: Text("Noticias Actualizadas"),
-                          ),
-                        );
-                    },
-                  );
+                  if (snapshot.data.size > 0) {
+                    return RefreshIndicator(
+                      child: ListView(
+                        children:
+                            snapshot.data.docs.map((DocumentSnapshot document) {
+                          return new ItemNoticiaFirebase(
+                            noticia: New(
+                              source: null,
+                              author: document['author'],
+                              title: document['title'],
+                              description: document['description'],
+                              url: document['url'],
+                              urlToImage: document['urlToImage'],
+                              publishedAt:
+                                  DateTime.parse(document["publishedAt"]),
+                              // content: element['content'],
+                              // //
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      // child: ListView.builder(
+                      //   itemCount: state.noticiasList.length,
+                      //   itemBuilder: (BuildContext context, int index) {
+                      //     return ItemNoticia(noticia: state.noticiasList[index]);
+                      //   },
+                      // ),
+                      onRefresh: () async {
+                        print('Refresh Indicator');
+                        ScaffoldMessenger.of(context)
+                          ..hideCurrentSnackBar()
+                          ..showSnackBar(
+                            SnackBar(
+                              content: Text("Noticias Actualizadas"),
+                            ),
+                          );
+                      },
+                    );
+                  } else {
+                    return Center(child: Text("No tienes noticias guardadas"));
+                  }
                 });
           }
           return Center(child: CircularProgressIndicator());

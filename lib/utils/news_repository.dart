@@ -31,7 +31,7 @@ class NewsRepository {
     //   queryParameters: {"country": "mx", "apiKey": apiKey},
     // );
     var _uri;
-    if (query == '') {
+    if (query == '' || query == 'sports') {
       _uri = Uri(
         scheme: 'https',
         host: 'newsapi.org',
