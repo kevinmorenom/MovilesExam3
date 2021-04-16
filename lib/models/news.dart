@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import 'new.dart';
 
 class News extends Equatable {

@@ -24,3 +24,10 @@ class FailedApiNewsState extends SearchState {
   @override
   List<Object> get props => [fail];
 }
+
+class LoadedHiveNewsState extends SearchState {
+  final List<New> noticiasHiveList;
+  LoadedHiveNewsState({@required this.noticiasHiveList});
+  @override
+  List<Object> get props => [noticiasHiveList];
+}

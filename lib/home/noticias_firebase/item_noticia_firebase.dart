@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_login/home/noticias_subir/bloc/upload_bloc.dart';
 import 'package:google_login/models/new.dart';
 
 class ItemNoticiaFirebase extends StatelessWidget {
@@ -9,7 +7,6 @@ class ItemNoticiaFirebase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-// TODO: Cambiar image.network por Extended Image con place holder en caso de error o mientras descarga la imagen
     return Container(
       child: Padding(
         padding: EdgeInsets.all(6.0),
@@ -26,9 +23,17 @@ class ItemNoticiaFirebase extends StatelessWidget {
                       topLeft: Radius.circular(8),
                       bottomLeft: Radius.circular(8)),
                   child: Image.network(
-                    "${noticia.urlToImage}",
+                    '${noticia.urlToImage}',
                     height: 160,
                     fit: BoxFit.cover,
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace stackTrace) {
+                      return Image.asset(
+                        "assets/unnamed.jpg",
+                        height: 160,
+                        fit: BoxFit.cover,
+                      );
+                    },
                   ),
                 ),
               ),

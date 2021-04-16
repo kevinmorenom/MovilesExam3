@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_login/utils/news_repository.dart';
 
 import 'bloc/search_bloc.dart';
 import 'item_noticia.dart';
@@ -43,14 +42,11 @@ class _NoticiasDeportesState extends State<NoticiasDeportes> {
     }, builder: (context, state) {
       if (state is LoadedApiNewsState) {
         //si no hay nada en la lista
-        //TODO: Implementar mejor manejo de errores para la api
         if (state.noticiasExternasList.length == 0) {
           return Column(
             children: [
               SearchBar(query: query),
-              Center(
-                child: Text("No hay noticias", style: TextStyle(fontSize: 32)),
-              ),
+              _apiNews(state.noticiasExternasList)
             ],
           );
         } else if (state.noticiasExternasList.length > 0) {

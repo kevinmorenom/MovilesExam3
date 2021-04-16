@@ -3,9 +3,14 @@ import 'dart:io';
 
 import 'package:google_login/models/new.dart';
 import 'package:google_login/utils/secrets.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 
+part 'news_repository.g.dart';
+
+@HiveType(typeId: 1, adapterName: "NewsAdapter")
 class NewsRepository {
+  @HiveField(0)
   List<New> _noticiasList;
 
   static final NewsRepository _NewsRepository = NewsRepository._internal();
@@ -57,7 +62,8 @@ class NewsRepository {
       return [];
     } catch (e) {
       //arroje un error
-      throw "Ha ocurrido un error: $e";
+      // throw "Ha ocurrido un error: $e";
+      return [];
     }
   }
 }

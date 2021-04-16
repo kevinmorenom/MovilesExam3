@@ -120,7 +120,7 @@ class _PantallaTresState extends State<PantallaTres> {
               child: Text("Guardar"),
               onPressed: () {
                 _bloc.add(
-                  SaveApiNewsEvent(
+                  SaveNewElementEvent(
                     noticia: New(
                       author: autorTc.text,
                       title: tituloTc.text,

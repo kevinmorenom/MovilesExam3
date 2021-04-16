@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_login/home/noticias_subir/bloc/upload_bloc.dart';
@@ -42,9 +43,17 @@ class ItemNoticia extends StatelessWidget {
                         topLeft: Radius.circular(8),
                         bottomLeft: Radius.circular(8)),
                     child: Image.network(
-                      "${noticia.urlToImage}",
+                      '${noticia.urlToImage}',
                       height: 160,
                       fit: BoxFit.cover,
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace stackTrace) {
+                        return Image.asset(
+                          "assets/unnamed.jpg",
+                          height: 160,
+                          fit: BoxFit.cover,
+                        );
+                      },
                     ),
                   ),
                 ),
