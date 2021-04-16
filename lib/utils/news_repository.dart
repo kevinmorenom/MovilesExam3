@@ -13,6 +13,7 @@ class NewsRepository {
   @HiveField(0)
   List<New> _noticiasList;
 
+  // ignore: non_constant_identifier_names
   static final NewsRepository _NewsRepository = NewsRepository._internal();
   factory NewsRepository() {
     return _NewsRepository;
@@ -20,7 +21,6 @@ class NewsRepository {
 
   NewsRepository._internal();
   Future<List<New>> getAvailableNoticias(String query) async {
-    // TODO: utilizar variable q="$query" para buscar noticias en especifico
     // https://newsapi.org/v2/top-headlines?country=mx&q=futbol&category=sports&apiKey&apiKey=laAPIkey
     // crear modelos antes
 
@@ -30,14 +30,17 @@ class NewsRepository {
     //   path: 'v2/top-headlines',
     //   queryParameters: {"country": "mx", "apiKey": apiKey},
     // );
-    // TODO: completar request y deserializacion
     var _uri;
     if (query == '') {
       _uri = Uri(
         scheme: 'https',
         host: 'newsapi.org',
         path: 'v2/top-headlines',
-        queryParameters: {"country": "mx", "apiKey": apiKey},
+        queryParameters: {
+          "country": "mx",
+          "category": "sports",
+          "apiKey": apiKey
+        },
       );
     }
 

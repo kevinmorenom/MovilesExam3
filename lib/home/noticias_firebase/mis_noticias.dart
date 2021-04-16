@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_login/home/noticias_ext_api/item_noticia.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_login/home/noticias_firebase/item_noticia_firebase.dart';
 import 'package:google_login/models/new.dart';
@@ -18,7 +17,7 @@ class _MisNoticiasState extends State<MisNoticias> {
   @override
   Widget build(BuildContext context) {
     //Stream que cada que cambia algo en firebase, atualiza el snapshot
-    Stream mis_noticias =
+    Stream misNoticias =
         FirebaseFirestore.instance.collection('noticias').snapshots();
     return BlocProvider(
       create: (context) => MyNewsBloc()..add(RequestAllNewsEvent()),
@@ -45,7 +44,7 @@ class _MisNoticiasState extends State<MisNoticias> {
         builder: (context, state) {
           if (state is LoadedNewsState) {
             return StreamBuilder<QuerySnapshot>(
-                stream: mis_noticias,
+                stream: misNoticias,
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   return RefreshIndicator(
